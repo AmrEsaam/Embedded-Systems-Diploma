@@ -255,6 +255,11 @@ FIFO_Status_t FIFO_add_student(FIFO_Buffer_t* FIFO_Buf)
             scanf("%d",&FIFO_Buf->head->course_id[i]);
         }
 
+        
+        printf("\n------------------------------------------------------------");
+        printf("\n(INFO) Student with roll number (%d) is added successfully",FIFO_Buf->head->roll_num);
+        printf("\n------------------------------------------------------------");
+
         //Circular Queue
         if(FIFO_Buf->head == (FIFO_Buf->base + (FIFO_Buf->length*sizeof(element_type))))
             FIFO_Buf->head=FIFO_Buf->base;
@@ -263,9 +268,6 @@ FIFO_Status_t FIFO_add_student(FIFO_Buffer_t* FIFO_Buf)
         
         FIFO_Buf->count++;
 
-        printf("\n------------------------------------------------------------");
-        printf("\n(INFO) Student with roll number (%d) is added successfully",FIFO_Buf->head->roll_num);
-        printf("\n------------------------------------------------------------");
     }
     else
     {
@@ -424,7 +426,7 @@ FIFO_Status_t FIFO_find_first_name(FIFO_Buffer_t* FIFO_Buf)
  **/
 FIFO_Status_t FIFO_find_course(FIFO_Buffer_t* FIFO_Buf)
 {
-    uint32_t i=0, course=0, j=0, count=0;
+    uint32_t i=0, course=0, j=0, count=0, num=0;
     element_type* p_Student=FIFO_Buf->tail;
 
    if(!FIFO_Buf->base || !FIFO_Buf->head || !FIFO_Buf->tail)
@@ -454,15 +456,17 @@ FIFO_Status_t FIFO_find_course(FIFO_Buffer_t* FIFO_Buf)
         {
             if(p_Student->course_id[count] == course)
             {
-                printf("\nStudent data: ");
+                ++num;
+                printf("\nStudent number (%d) data: ",num);
                 printf("\nStudent first name: %s",p_Student->f_name);
                 printf("\nStudent last name: %s",p_Student->l_name);
                 printf("\nStudent roll number: %d",p_Student->roll_num);
                 printf("\nStudent GPA: %f",p_Student->GPA);
                 for(j=0;j<COURSE_NUM;j++)
                 {
-                    printf("\nStudent registered course number %d: %d",j,p_Student->course_id[j]);
+                    printf("\nStudent registered course number %d: %d",j+1,p_Student->course_id[j]);
                 }
+                printf("\n");
             }
         }
         p_Student++;
